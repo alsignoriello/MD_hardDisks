@@ -1,2 +1,5 @@
-# soft_disks
+# Soft Disks
+
 molecular dynamics simulation with soft disks
+
+
