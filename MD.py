@@ -11,29 +11,32 @@ def molecular_dynamics(particles, dt, Nt, parameters):
 	# potential energy for every time step
 	E_p = np.zeros(Nt)
 
+	k = parameters['k']
+	L = parameters['L']
+	B = parameters['B']
 
+ 
 	for t in range(0,Nt):
 
 		# Integrate Newton's Equations of Motion
 		# using velocity verlet algorithm
 
-		step1(particles, dt)
+		# (x,y) = dt * velocity + 1/2 * acceleration * dt^2
+		step1(particles, dt, L)
 
-		k = parameters['k']
-		L = parameters['L']
-		B = parameters['B']
+		# derive acceleration from particle-particle interactions
 		ep, accels = step2(particles, k, L, B)
 		E_p[t] = ep
 
-		# step3(particles)
+		# calculate new velocities
+		# v(t+1) = v(t) + 1/2(a(t) + a(t+1)) * dt
 		ek = step3(particles, accels, dt)
 		E_k[t] = ek
-
 
 		# write coordinates to file
 
 		# plot disks
-		plot_disks(particles)
+		plot_disks(particles, L)
 
 		# plot voronoi
 

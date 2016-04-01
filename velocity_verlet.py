@@ -23,12 +23,27 @@ Step 3: Calculate new velocities from accelerations
 def periodic_diff(x1, x2, L):
 	return ((x1 - x2 + L/2.) % L) - L/2.
 
-
-def step1(particles, dt):
+# (x,y) = dt * velocity + 1/2 * acceleration * dt^2
+def step1(particles, dt, L):
 	for particle in particles:
 		particle.x += (particle.vx * dt) + (particle.ax * dt**2 / 2)
 		particle.y += (particle.vy * dt) + (particle.ay * dt**2 / 2)
+
+		# check periodic boundary conditions
+		if particle.x < 0:
+			particle.x = particle.x + L[0]
+
+		if particle.x > L[0]:
+			particle.x = particle.x - L[0]
+
+		if particle.y < 0:
+			particle.y = particle.y + L[1]
+
+		if particle.y > L[1]:
+			particle.y = particle.y - L[1]
+
 	return particles
+
 
 def step2(particles, k, L, B):
 
