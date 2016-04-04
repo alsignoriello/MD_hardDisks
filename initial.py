@@ -17,14 +17,19 @@ def initialize_particles(N, d, m, L):
 
 	# initialize centers on grid
 	count = 0
-	for xi in range(0, lx + d, d):
-		for yi in range(0, ly + d, d):
+	for xi in range(d/2, lx + d/2, d):
+		for yi in range(d/2, ly + d/2, d):
+
 			# random initial velocities [-1,1]
-			vx = np.random.normal(0,1) / 10.
-			vy = np.random.normal(0,1) / 10.
+			vx = np.random.normal(0,1) 
+			vy = np.random.normal(0,1) 
+
+			# store in class particle
 			particle = Particle(count, xi, yi, d, m, vx, vy, ax, ay)
-			count += 1
 			particles.append(particle)
+
+			count += 1
+
 	return particles
 
 

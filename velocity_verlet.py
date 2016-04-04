@@ -24,10 +24,10 @@ def periodic_diff(x1, x2, L):
 	return ((x1 - x2 + L/2.) % L) - L/2.
 
 # (x,y) = dt * velocity + 1/2 * acceleration * dt^2
-def step1(particles, dt, L):
+def get_positions(particles, dt, L):
 	for particle in particles:
-		particle.x += (particle.vx * dt) + (particle.ax * dt**2 / 2)
-		particle.y += (particle.vy * dt) + (particle.ay * dt**2 / 2)
+		particle.x = particle.x + (particle.vx * dt) + 0.5 * (particle.ax * dt**2)
+		particle.y = particle.y + (particle.vy * dt) + 0.5 * (particle.ay * dt**2)
 
 		# check periodic boundary conditions
 		if particle.x < 0:
@@ -45,12 +45,10 @@ def step1(particles, dt, L):
 	return particles
 
 
-def step2(particles, k, L, B):
+def get_forces(particles, k, L, B):
 
 	lx = L[0]
 	ly = L[1]
-
-	# forces due to inter-particle interactions
 	N = len(particles)
 	forces = np.zeros((N,2))
 
@@ -59,7 +57,8 @@ def step2(particles, k, L, B):
 
 	# calculate particle - particle interaction forces
 	for i,particle in enumerate(particles):
-		for j,particle2 in enumerate(particles[i+1:]):
+		j = i + 1
+		for particle2 in particles[i+1:]:
 			x1 = particle.x 
 			y1 = particle.y
 			x2 = particle2.x
@@ -67,36 +66,50 @@ def step2(particles, k, L, B):
 
 			dx = periodic_diff(x1, x2, lx)
 			dy = periodic_diff(y1, y2, ly)
-			dist = dx**2 + dy**2
+			# distance between particle i and particle j
+			d_ij = dx**2 + dy**2 
 
+			# two particles interact if they are close enough
 			D = max(particle.d, particle2.d)
-			if dist < D:
-				F = -k * (D/dist - 1) # not sure why -1 
-				ep += (D - dist)**2
+			if d_ij < D**2:
+				d_ij = d_ij**0.5
+				# Hooke's law for spring potential
+				F = -k * (D/d_ij - 1) 
 				forces[i,0] += F * dx
 				forces[i,1] += F * dy
 				forces[j,0] -= F * dx
 				forces[j,1] -= F * dy
 
+				# particle-particle potential energy
+				# due to overlap
+				ep = ep + (D - d_ij)**2
+
+			j += 1
+
 	# new accelerations due to forces
 	a = np.zeros((N, 2))
-	for i, particle in enumerate(particles):
+	for i,particle in enumerate(particles):
 		m = particle.m
 		a[i,0] = (forces[i,0] / m) - B * particle.vx
 		a[i,1] = (forces[i,1] / m) - B * particle.vy
 
-	# move single particle
+	ep = k * 0.5 * ep
+
+	return ep, a
+
+
+
+def move_single_particle(particles, a):
+	# # move single particle
 	p_i = 1 # particle index
 	theta = 2. * np.pi * np.random.uniform(0,1)
 	a[p_i,0] += cos(theta) / particles[p_i].m
 	a[p_i,1] += sin(theta) / particles[p_i].m
-
-	
-	return ((k/2.) * ep), a
+	return a
 	
 
 
-def step3(particles, accels, dt):
+def get_velocities(particles, accels, dt):
 
 	# kinetic energy
 	ek = 0.
@@ -107,12 +120,12 @@ def step3(particles, accels, dt):
 		ay_old = particle.ay
 		ax_new = accels[i,0]
 		ay_new = accels[i,1]
-		particle.vx += (ax_old + ax_new) * (dt/2.)
-		particle.vy += (ay_old + ay_new) * (dt/2.)
+		particle.vx = particle.vx + 0.5 * dt * (ax_old + ax_new)
+		particle.vy = particle.vy + 0.5 * dt * (ay_old + ay_new)
 
-		ek += particle.m * (particle.vx**2 + particle.vy**2) / 2.
+		ek += 0.5 * particle.m * (particle.vx**2 + particle.vy**2)
 
-		# new acceleration = old acceleration
+		# new acceleration
 		particle.ax = ax_new
 		particle.ay = ay_new
 

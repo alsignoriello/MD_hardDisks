@@ -19,20 +19,27 @@ from scipy.spatial import Voronoi
 # end
 
 
-def plot_disks(particles, L):
+	# colors = ["b", "g", "y", "m", "c", "pink", "purple", "seagreen",
+	# 		"salmon", "orange", "paleturquoise", "midnightblue",
+	# 		"crimson", "lavender"]
+
+def plot_disks(particles, L, file):
+
+
 	plt.cla()
 	frame = plt.gca()
 	for particle in particles:
 		x = particle.x
 		y = particle.y
 		r = particle.d / 2. 
-		circle = plt.Circle((x,y),radius=r,color="c",fill=False)
+		c = "r"
+		circle = plt.Circle((x,y),radius=r,color=c,fill=False)
 		frame.add_artist(circle)
 
 	plt.axis([0,L[0],0,L[1]])
 	frame.axes.get_xaxis().set_ticks([])
 	frame.axes.get_yaxis().set_ticks([])
-	plt.show() 
+	plt.savefig("disks/%s.jpg" % file) 
 
 
 

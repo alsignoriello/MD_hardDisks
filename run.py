@@ -5,7 +5,6 @@ from MD import molecular_dynamics
 
 
 # Experiment Parameters
-
 # number of particles
 N = 100
 
@@ -13,10 +12,10 @@ N = 100
 d = 2
 
 # mass of particles
-m = 3.
+m = 3
 
-# Dictionary for equation paramters
-# makes it easier to pass through
+# Equation Parameters
+# dictionary for equation paramters
 parameters = {}
 # spring constant for harmonic force law
 k = 1.
@@ -31,17 +30,17 @@ fd = 10.
 parameters['fd'] = fd
 
 # size of box
-lx = 9. * d 
-ly = 9. * d
+lx = 10. * d 
+ly = 10. * d
 L = np.array([lx,ly])
 parameters['L'] = L
 
 # Simulation Parameters
 # time step
-dt = 1 * np.e**(-2)
+dt = 0.01
 
 # number of time steps
-Nt = 10;
+Nt = 100;
 
 # initialize all particles on grid
 particles = initialize_particles(N, d, m, L)
