@@ -58,9 +58,11 @@ def get_forces(particles, k, L, B):
 	ep = 0.
 
 	# calculate particle - particle interaction forces
-	for i,particle in enumerate(particles):
-		j = i + 1
-		for particle2 in particles[i+1:]:
+	for i in range(N):
+		particle = particles[i]
+
+		for j in range(i+1, N):
+			particle2 = particles[j]
 
 			x1 = particle.x 
 			y1 = particle.y
@@ -82,16 +84,15 @@ def get_forces(particles, k, L, B):
 
 				# Hooke's law for spring potential
 				F = -k * (D/d_ij - 1) 
-				forces[i,0] += F * dx
-				forces[i,1] += F * dy
-				forces[j,0] -= F * dx
-				forces[j,1] -= F * dy
+				forces[i,0] -= F * dx
+				forces[i,1] -= F * dy
+				forces[j,0] += F * dx
+				forces[j,1] += F * dy
 
 				# particle-particle potential energy
 				# due to overlap
 				ep = ep + (D - d_ij)**2
 
-			j += 1
 
 
 	# new accelerations due to forces

@@ -30,8 +30,8 @@ fd = 10.
 parameters['fd'] = fd
 
 # size of box
-lx = 9. * d 
-ly = 9. * d
+lx = 10. * d 
+ly = 10. * d
 L = np.array([lx,ly])
 parameters['L'] = L
 
