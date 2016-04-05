@@ -30,8 +30,8 @@ fd = 10.
 parameters['fd'] = fd
 
 # size of box
-lx = 10. * d 
-ly = 10. * d
+lx = 9. * d 
+ly = 9. * d
 L = np.array([lx,ly])
 parameters['L'] = L
 
@@ -40,7 +40,7 @@ parameters['L'] = L
 dt = 0.01
 
 # number of time steps
-Nt = 100;
+Nt = 50000;
 
 # initialize all particles on grid
 particles = initialize_particles(N, d, m, L)

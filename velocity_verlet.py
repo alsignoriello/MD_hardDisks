@@ -25,7 +25,9 @@ def periodic_diff(x1, x2, L):
 
 # (x,y) = dt * velocity + 1/2 * acceleration * dt^2
 def get_positions(particles, dt, L):
+
 	for particle in particles:
+
 		particle.x = particle.x + (particle.vx * dt) + 0.5 * (particle.ax * dt**2)
 		particle.y = particle.y + (particle.vy * dt) + 0.5 * (particle.ay * dt**2)
 
@@ -59,6 +61,7 @@ def get_forces(particles, k, L, B):
 	for i,particle in enumerate(particles):
 		j = i + 1
 		for particle2 in particles[i+1:]:
+
 			x1 = particle.x 
 			y1 = particle.y
 			x2 = particle2.x
@@ -66,13 +69,17 @@ def get_forces(particles, k, L, B):
 
 			dx = periodic_diff(x1, x2, lx)
 			dy = periodic_diff(y1, y2, ly)
+
 			# distance between particle i and particle j
 			d_ij = dx**2 + dy**2 
 
 			# two particles interact if they are close enough
-			D = max(particle.d, particle2.d)
+			D = 0.5 * (particle.d + particle2.d)
 			if d_ij < D**2:
+
+				# euclidean distance is square root
 				d_ij = d_ij**0.5
+
 				# Hooke's law for spring potential
 				F = -k * (D/d_ij - 1) 
 				forces[i,0] += F * dx
@@ -86,6 +93,7 @@ def get_forces(particles, k, L, B):
 
 			j += 1
 
+
 	# new accelerations due to forces
 	a = np.zeros((N, 2))
 	for i,particle in enumerate(particles):
@@ -95,7 +103,7 @@ def get_forces(particles, k, L, B):
 
 	ep = k * 0.5 * ep
 
-	return ep, a
+	return ep, forces, a
 
 
 
@@ -116,6 +124,7 @@ def get_velocities(particles, accels, dt):
 
 	# update velocities from accelerations
 	for i,particle in enumerate(particles):
+
 		ax_old = particle.ax
 		ay_old = particle.ay
 		ax_new = accels[i,0]
