@@ -12,7 +12,6 @@ date: 4/5/16
 
 """
 
-
 # Experiment Parameters
 # number of particles
 N = 100

@@ -108,12 +108,12 @@ def get_forces(particles, k, L, B):
 
 
 
-def move_single_particle(particles, a):
+def move_single_particle(particles, a, fd):
 	# # move single particle
-	p_i = 1 # particle index
+	p_i = 34 # particle index
 	theta = 2. * np.pi * np.random.uniform(0,1)
-	a[p_i,0] += cos(theta) / particles[p_i].m
-	a[p_i,1] += sin(theta) / particles[p_i].m
+	a[p_i,0] += fd * cos(theta) / particles[p_i].m
+	a[p_i,1] += fd * sin(theta) / particles[p_i].m
 	return a
 	
 

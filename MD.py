@@ -32,6 +32,9 @@ def molecular_dynamics(particles, dt, Nt, parameters):
 	# drag coefficient
 	B = parameters['B']
 
+	# force on mobile particle
+	fd = parameters['fd']
+
  
 	for t in range(0,Nt):
 
@@ -49,7 +52,7 @@ def molecular_dynamics(particles, dt, Nt, parameters):
 		E_p[t] = ep
 
 		# diffuse single particle
-		# accels = move_single_particle(particles, accels)
+		accels = move_single_particle(particles, accels, fd)
 
 		# calculate new velocities
 		# v(t+1) = v(t) + 1/2(a(t) + a(t+1)) * dt
@@ -59,10 +62,21 @@ def molecular_dynamics(particles, dt, Nt, parameters):
 		# write coordinates to file
 
 		# plot disks
-		if t % 100 == 0:
-			plot_disks(particles, forces, L, str(t))
+		# if t % 100 == 0:
+		# 	plot_disks(particles, forces, L, str(t))
 		
 		# plot voronoi
+		if t > 500 and t % 50 == 0:
+			plot_voronoi(particles, L, str(t))
+
+
+
+
+
+
+
+
+
 
 
 
