@@ -37,8 +37,8 @@ def plot_disks(particles, forces, L, file):
 		x = particle.x
 		y = particle.y
 		r = particle.d / 2. 
-		c = "r"
-		plt.scatter(x,y,color=c)
+		c = "c"
+		# plt.scatter(x,y,color=c)
 		# fx = forces[i,0]
 		# fy = forces[i,1]
 		# plot_force(x,y,fx,fy)
@@ -52,16 +52,16 @@ def plot_disks(particles, forces, L, file):
 
 
 
-# def plot_voronoi(particles):
-#   N = len(particles)
-#   coords = np.zeros((N,2))
-#   for particle in particles:
-#     x = particle.x
-#     y = particle.y
-#     coords[i,0] = x
-#     coords[i,1] = y
+def plot_voronoi(particles):
+  N = len(particles)
+  coords = np.zeros((N,2))
+  for particle in particles:
+    x = particle.x
+    y = particle.y
+    coords[i,0] = x
+    coords[i,1] = y
 
-#   vor = Voronoi(coords)
+  vor = Voronoi(coords)
   
 
 	

@@ -20,6 +20,7 @@ ay - acceleration wrt y
 
 * assure all are floats - necessary for computing equations
 
+
 """
 
 

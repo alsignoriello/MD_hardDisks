@@ -2,6 +2,15 @@
 from Particle import Particle
 import numpy as np
 
+"""
+
+inital.py - initializes class particles with centers on a grid
+with periodic bounary conditions
+author: Lexi Signoriello
+date: 4/5/16
+
+
+"""
 
 
 def initialize_particles(N, d, m, L):

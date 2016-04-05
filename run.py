@@ -3,6 +3,15 @@ import numpy as np
 from initial import initialize_particles
 from MD import molecular_dynamics
 
+""" 
+
+run.py - Runs molecular dynamics simulation for disks
+author: Lexi Signoriello
+date: 4/5/16
+
+
+"""
+
 
 # Experiment Parameters
 # number of particles
@@ -40,7 +49,7 @@ parameters['L'] = L
 dt = 0.01
 
 # number of time steps
-Nt = 50000;
+Nt = 20000;
 
 # initialize all particles on grid
 particles = initialize_particles(N, d, m, L)

@@ -1,7 +1,19 @@
 #!/usr/bin/python
 from velocity_verlet import *
 import numpy as np
-from plot import plot_disks
+from plot import plot_disks, plot_voronoi
+
+
+"""
+
+MD.py - molecular dynamics simulation for disks
+author: Lexi Signoriello
+date: 4/5/16
+
+plot to disks folder every 100 time steps
+
+
+"""
 
 def molecular_dynamics(particles, dt, Nt, parameters):
 
