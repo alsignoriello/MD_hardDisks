@@ -3,3 +3,4 @@ mark.m
 voronoi/
 .matplotlib
 movies/*
+testdata/
