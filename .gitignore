@@ -4,3 +4,4 @@ voronoi/
 .matplotlib
 movies/*
 testdata/
+*.pyc
