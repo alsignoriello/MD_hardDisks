@@ -5,15 +5,14 @@ Simulates 2D molecular dynamics simulation with hard sphere potential.
 
 # Definitions
 
-Hooke's Law for spring potential
+## Hooke's Law for spring potential
 
 F = -kx
 
 
-Velocity Verlet Integration
+## Velocity Verlet Integration
 
 Steps are described here: 
-
 https://en.wikipedia.org/wiki/Verlet_integration
 
 Step 1: Get positions from current velocity and acceleration
@@ -25,8 +24,7 @@ Step 3: Calculate new velocities from accelerations
 
 # Running the Simulation
 
-sh run.sh folder
-sh plot.sh folder
+sh run.sh [folder]
 
 
 # Parameters
