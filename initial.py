@@ -30,16 +30,16 @@ def initialize_particles(N, d, m, L):
 		for yi in range(int(d)/2, ly + int(d)/2, int(d)):
 
 			# random initial velocities [-1,1]
-			vx = np.random.normal(0,1) #/ 10.
-			vy = np.random.normal(0,1) #/ 10.
+			vx = np.random.normal(0,1) 
+			vy = np.random.normal(0,1) 
 
 			# store in class particle
 			particle = Particle(count, xi, yi, d, m, vx, vy, ax, ay)
 			particles.append(particle)
 
 			count += 1
+			if count == N:
+				return particles
 
 	return particles
-
-
 

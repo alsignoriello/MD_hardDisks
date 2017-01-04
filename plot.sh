@@ -16,7 +16,7 @@ dt=0.01
 Nt=2000
 
 # plot energy
-python $HOME/plot_energy.py $dt
+# python $HOME/plot_energy.py $dt
 
 
 # plot voronoi

@@ -37,3 +37,4 @@ sh plot.sh folder
 # Assumptions
 
 -periodic boundary conditions
+-Max N is 100 (or adapt initalization)

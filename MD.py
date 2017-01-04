@@ -2,6 +2,7 @@
 from velocity_verlet import *
 import numpy as np
 from parser import write_coords
+from plot import plot_voronoi, plot_disks
 
 
 """
@@ -55,10 +56,11 @@ def molecular_dynamics(particles, dt, Nt, parameters):
 		E_k[t] = ek
 
 		# write coordinates to file every 100 time steps
-		if t % 100 == 0:
+		if t % 100 == 0 and t > 500:
 			print t
 			write_coords(particles, t)
-
+			plot_voronoi(particles, L, "k", t)
+			plot_disks(particles, L, "c", False, t)
 
 
 	np.savetxt("kinetic_energy.txt", E_k)

@@ -3,12 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from Particle import Particle
 from scipy.spatial import Voronoi, voronoi_plot_2d
-from math import sqrt
-from tile import tile_points
-  
 
 
-def plot_disks(particles, forces, L, file):
+def plot_disks(particles, L, color, fill, t):
 
 
 	plt.cla()
@@ -18,19 +15,18 @@ def plot_disks(particles, forces, L, file):
 		x = particle.x
 		y = particle.y
 		r = particle.d / 2. 
-		c = "c"
-		circle = plt.Circle((x,y),radius=r,color=c,fill=False)
+		circle = plt.Circle((x,y),radius=r,color=color,fill=fill)
 		frame.add_artist(circle)
 
 	plt.axis([0,L[0],0,L[1]])
 	frame.axes.get_xaxis().set_ticks([])
 	frame.axes.get_yaxis().set_ticks([])
-	plt.savefig("disks/%s.jpg" % file) 
+	plt.savefig("disks/%s.jpg" % t) 
 	plt.close()
 
 
 
-def plot_voronoi(particles, L, file):
+def plot_voronoi(particles, L, color, t):
   	N = len(particles)
   	coords = np.zeros((N,2))
   	d = particles[0].d
@@ -40,10 +36,6 @@ def plot_voronoi(particles, L, file):
   		y = particle.y
   		coords[i,0] = x
   		coords[i,1] = y
-  		if i == 34:
-  			color = "r"
-  		else:
-  			color="k"
   		plt.scatter(x,y,color=color,marker='.')
 
   	vor = Voronoi(coords)
@@ -57,18 +49,11 @@ def plot_voronoi(particles, L, file):
   			x2,y2 = vor.vertices[e2,:]
   			plt.plot([x1,x2],[y1,y2],color="c")
 
-
-  	# shortcut to plotting infinite regions
-  	plt.axis([d,L[0]-d,d,L[1]-d])
-  	# plt.axis([0,L[0], 0, L[1]])
-  	frame = plt.gca()
-  	frame.axes.get_xaxis().set_ticks([])
-    frame.axes.get_yaxis().set_ticks([])
-  	plt.savefig("voronoi/%s.jpg" % file)
-  	plt.close()
+	plt.axis([d,L[0]-d,d,L[1]-d])
+	frame = plt.gca()
+	frame.axes.get_xaxis().set_ticks([])
+	frame.axes.get_yaxis().set_ticks([])
+	plt.savefig("voronoi/%s.jpg" % t)
+	plt.close()
 
 
-
-  
-
-	
