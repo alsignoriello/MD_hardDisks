@@ -26,8 +26,8 @@ def initialize_particles(N, d, m, L):
 
 	# initialize centers on grid
 	count = 0
-	for xi in range(d/2, lx + d/2, d):
-		for yi in range(d/2, ly + d/2, d):
+	for xi in range(int(d)/2, lx + int(d)/2, int(d)):
+		for yi in range(int(d)/2, ly + int(d)/2, int(d)):
 
 			# random initial velocities [-1,1]
 			vx = np.random.normal(0,1) #/ 10.
@@ -38,8 +38,6 @@ def initialize_particles(N, d, m, L):
 			particles.append(particle)
 
 			count += 1
-
-	print count
 
 	return particles
 

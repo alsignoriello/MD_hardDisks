@@ -7,26 +7,6 @@ from math import sqrt
 from tile import tile_points
   
 
-# def unit_vector(v1, v2):
-# 	vector = v1 - v2
-# 	dist = euclidean_distance(v1[0], v1[1], v2[0],v2[1])
-# 	uv = vector / dist
-# 	return uv
-
-# # Euclidean distance between (x,y) coordinates
-# def euclidean_distance(x1, y1, x2, y2):
-# 	return sqrt((x1 - x2)**2 + (y1 - y2)**2)
-
-# def plot_force(x,y,fx,fy):
-
-# 	f = np.array([fx,fy])
-# 	tail = unit_vector(f, np.array([0,0]))
-
-# 	x1 = x - (0.5 * tail[0])
-# 	y1 = y - (0.5 * tail[1])
-# 	plt.plot([x,x1],[y,y1],color="k")
-# 	return
-
 
 def plot_disks(particles, forces, L, file):
 
@@ -39,10 +19,6 @@ def plot_disks(particles, forces, L, file):
 		y = particle.y
 		r = particle.d / 2. 
 		c = "c"
-		# plt.scatter(x,y,color=c)
-		# fx = forces[i,0]
-		# fy = forces[i,1]
-		# plot_force(x,y,fx,fy)
 		circle = plt.Circle((x,y),radius=r,color=c,fill=False)
 		frame.add_artist(circle)
 
@@ -75,11 +51,6 @@ def plot_voronoi(particles, L, file):
  	for edge in vor.ridge_vertices:
   		e1 = edge[0]
   		e2 = edge[1]
-  		# if e1 == -1:
-  		# 	print e2, vor.vertices[e2,:]
-
-  		# if e2 == -1:
-  		# 	print e1, vor.vertices[e2,:]
 
   		if e1 != -1 and e2 != -1:
   			x1,y1 = vor.vertices[e1,:]
@@ -92,7 +63,7 @@ def plot_voronoi(particles, L, file):
   	# plt.axis([0,L[0], 0, L[1]])
   	frame = plt.gca()
   	frame.axes.get_xaxis().set_ticks([])
-	frame.axes.get_yaxis().set_ticks([])
+    frame.axes.get_yaxis().set_ticks([])
   	plt.savefig("voronoi/%s.jpg" % file)
   	plt.close()
 

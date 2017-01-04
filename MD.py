@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from velocity_verlet import *
 import numpy as np
-from plot import plot_disks, plot_voronoi
+from parser import write_coords
 
 
 """
@@ -27,18 +27,15 @@ def molecular_dynamics(particles, dt, Nt, parameters):
 	k = parameters['k']
 
 	# length of box
-	L = parameters['L']
+	lx = parameters['Lx']
+	ly = parameters['Ly']
+	L = np.array([lx,ly])
 
 	# drag coefficient
 	B = parameters['B']
 
-	# force on mobile particle
-	fd = parameters['fd']
-
  
 	for t in range(0,Nt):
-
-		print t
 
 		# Integrate Newton's Equations of Motion
 		# using velocity verlet algorithm
@@ -51,24 +48,21 @@ def molecular_dynamics(particles, dt, Nt, parameters):
 		ep, forces, accels = get_forces(particles, k, L, B)
 		E_p[t] = ep
 
-		# diffuse single particle
-		accels = move_single_particle(particles, accels, fd)
 
 		# calculate new velocities
 		# v(t+1) = v(t) + 1/2(a(t) + a(t+1)) * dt
 		ek = get_velocities(particles, accels, dt)
 		E_k[t] = ek
 
-		# write coordinates to file
+		# write coordinates to file every 100 time steps
+		if t % 100 == 0:
+			print t
+			write_coords(particles, t)
 
-		# plot disks
-		# if t % 100 == 0:
-		# 	plot_disks(particles, forces, L, str(t))
-		
-		# plot voronoi
-		if t > 500 and t % 50 == 0:
-			plot_voronoi(particles, L, str(t))
 
+
+	np.savetxt("kinetic_energy.txt", E_k)
+	np.savetxt("potential_energy.txt", E_p)
 
 
 

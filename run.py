@@ -2,6 +2,9 @@
 import numpy as np
 from initial import initialize_particles
 from MD import molecular_dynamics
+from parser import write_parameters
+import sys
+
 
 """ 
 
@@ -12,43 +15,49 @@ date: 4/5/16
 
 """
 
-# Experiment Parameters
-# number of particles
-N = 100
-
-# diameter of particles
-d = 2
-
-# mass of particles
-m = 3
-
-# Equation Parameters
 # dictionary for equation paramters
 parameters = {}
+
+# Experiment Parameters
+# number of particles
+N = int(sys.argv[1])
+parameters['N'] = N
+
+# diameter of particles
+d = float(sys.argv[2])
+parameters['d'] = d
+
+# mass of particles
+m = float(sys.argv[3])
+parameters['m'] = m
+
+# Equation Parameters
 # spring constant for harmonic force law
-k = 1.
+k = float(sys.argv[4])
 parameters['k'] = k
 
 # drag coefficient
-B = 0.1
+B = float(sys.argv[5])
 parameters['B'] = B
-
-# force on mobile particle
-fd = 10.
-parameters['fd'] = fd
 
 # size of box
 lx = 10. * d 
 ly = 10. * d
 L = np.array([lx,ly])
-parameters['L'] = L
+parameters['Lx'] = lx
+parameters['Ly'] = ly
 
 # Simulation Parameters
 # time step
-dt = 0.01
+dt = float(sys.argv[6])
+parameters['dt'] = dt
 
 # number of time steps
-Nt = 20000;
+Nt = int(sys.argv[7])
+parameters['Nt'] = Nt
+
+# write parameters
+write_parameters(parameters)
 
 # initialize all particles on grid
 particles = initialize_particles(N, d, m, L)
